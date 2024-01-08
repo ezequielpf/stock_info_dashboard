@@ -47,6 +47,7 @@ df = df.rename(columns={'PETR4.SA': tickers[0],
 # App layout
 #app = Dash(__name__, external_stylesheets=[dbc.themes.CERULEAN])
 app = Dash(__name__)
+server = app.server
 
 app.layout = dbc.Container([
 
@@ -151,6 +152,6 @@ def web_scrapping(ticker):
     return result
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run_server(debug=False)
 
 

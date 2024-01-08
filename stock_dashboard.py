@@ -22,79 +22,69 @@ df = df.rename(columns={'PETR4.SA': tickers[0],
                         'WEGE3.SA': tickers[1],
                         'CEAB3.SA': tickers[2]})
 
-# -------------------------------------------------------------------------------------------
-# Web scrapping
-ticker_dict = {tickers[0]:'petrobras',
-              tickers[1]:'weg',
-              tickers[2]:'c%26a'}
-
-ticker = tickers[0]
-ticker_name = ticker_dict[ticker]
-request = requests.get('https://braziljournal.com/?s='+ticker_name)
-page_soup = bs4.BeautifulSoup(request.text, 'html.parser')
-page_info = page_soup.find_all('figcaption', class_='boxarticle-infos', limit=3)
-titles = []
-links = []
-
-for n in range(len(page_info)):
-    page_len = len(page_info[n].find_all('a'))
-    aux1 = [page_info[n].find_all('a')[i].text.strip() for i in range(page_len)]
-    aux2 = [page_info[n].find_all('a')[i].attrs['href'].strip() for i in range(page_len)]
-    titles.append(aux1)
-    links.append(aux2)
+## -------------------------------------------------------------------------------------------
+## Web scrapping
+#ticker_dict = {tickers[0]:'petrobras',
+#              tickers[1]:'weg',
+#              tickers[2]:'c%26a'}
+#
+#ticker = tickers[0]
+#ticker_name = ticker_dict[ticker]
+#request = requests.get('https://braziljournal.com/?s='+ticker_name)
+#page_soup = bs4.BeautifulSoup(request.text, 'html.parser')
+#page_info = page_soup.find_all('figcaption', class_='boxarticle-infos', limit=3)
+#titles = []
+#links = []
+#
+#for n in range(len(page_info)):
+#    page_len = len(page_info[n].find_all('a'))
+#    aux1 = [page_info[n].find_all('a')[i].text.strip() for i in range(page_len)]
+#    aux2 = [page_info[n].find_all('a')[i].attrs['href'].strip() for i in range(page_len)]
+#    titles.append(aux1)
+#    links.append(aux2)
 
 # -------------------------------------------------------------------------------------------
 # App layout
-app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
+#app = Dash(__name__, external_stylesheets=[dbc.themes.CERULEAN])
+app = Dash(__name__)
 
 app.layout = dbc.Container([
 
     dbc.Row([
 
         dbc.Col([
-            dcc.Dropdown(id = 'dropdown-selector',
+
+            dbc.Row([
+                dcc.Dropdown(id = 'dropdown-selector',
                          options = tickers,
                          value = tickers[0],
-                         style= dict(width='50%')),
-            dcc.Graph(id = 'candle-graph', figure={}, className='bg-dark')
-        ], width={'size':6}, align='center'),
+                         style= dict(width='50%')
+                         ),
+            
+            ], align='center'),
+            
+            dbc.Row([
+                dcc.Graph(id = 'candle-graph', figure={}, className='bg-dark')
+            ]),
+        ], width={'size':6}),
 
         dbc.Col([
+
             dbc.Row([
                 html.H1('Últimas notícias', className='text-center')
                 ]),
+            
             dbc.Row([
                 html.Div(children='', id='last_news', className="text-white")
                 #dcc.Markdown(children='', id='last_news')
             ])
-            
-            #html.Br(),
-            #dcc.Markdown('''
-            #             
-            #             [Estratégia corporativa](https://braziljournal.com/tag/estrategia-corporativa/)
-            #            ## [Estratégia corporativa](https://braziljournal.com/tag/estrategia-corporativa/)
-            #            
-            #             [Estratégia corporativa](https://braziljournal.com/tag/estrategia-corporativa/)
-            #            ## [Estratégia corporativa](https://braziljournal.com/tag/estrategia-corporativa/)
-            #             
-            #             [Estratégia corporativa](https://braziljournal.com/tag/estrategia-corporativa/)
-            #            ## [Estratégia corporativa](https://braziljournal.com/tag/estrategia-corporativa/)
-            #             
-            #''')
-            #id='last_news'
-        ], align='center')
+
+        ], align='center', width={'size':6})
 
     ])
 
-], fluid=True)
+], fluid=True, style={'margin-top': 150})
 
-#app.layout = html.Div([
-#    
-#    html.Div(children='Hello World!'),
-#    dcc.Dropdown(options = tickers, value = tickers[0], id = 'dropdown-selector'),
-#    dcc.Graph(id = 'candle-graph')
-#    
-#    ])
 
 @callback(
         Output(component_id = 'candle-graph', component_property = 'figure'),
@@ -150,12 +140,14 @@ def web_scrapping(ticker):
     result = [
         html.P(html.A(f'{titles[0][0]}', href=f'{links[0][0]}', className="text-decoration-none text-white")),
         html.H3(html.A(f'{titles[0][1]}', href=f'{links[0][1]}', className="text-decoration-none text-white")),
+        html.Br(),
         html.P(html.A(f'{titles[1][0]}', href=f'{links[1][0]}', className="text-decoration-none text-white")),
         html.H3(html.A(f'{titles[1][1]}', href=f'{links[1][1]}', className="text-decoration-none text-white")),
+        html.Br(),
         html.P(html.A(f'{titles[2][0]}', href=f'{links[2][0]}', className="text-decoration-none text-white")),
         html.H3(html.A(f'{titles[2][1]}', href=f'{links[2][1]}', className="text-decoration-none text-white"))
     ]
-    print(result)
+    #print(result)
     return result
 
 if __name__ == '__main__':

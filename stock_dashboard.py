@@ -129,8 +129,10 @@ def web_scrapping(ticker):
     result = [
         html.P(html.A(f'{titles[0][0]}', href=f'{links[0][0]}', className="text-decoration-none text-white")),
         html.H3(html.A(f'{titles[0][1]}', href=f'{links[0][1]}', className="text-decoration-none text-white")),
+        html.Br(),
         html.P(html.A(f'{titles[1][0]}', href=f'{links[1][0]}', className="text-decoration-none text-white")),
         html.H3(html.A(f'{titles[1][1]}', href=f'{links[1][1]}', className="text-decoration-none text-white")),
+        html.Br(),
         html.P(html.A(f'{titles[2][0]}', href=f'{links[2][0]}', className="text-decoration-none text-white")),
         html.H3(html.A(f'{titles[2][1]}', href=f'{links[2][1]}', className="text-decoration-none text-white"))
     ]

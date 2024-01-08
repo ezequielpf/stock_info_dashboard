@@ -1,4 +1,4 @@
-# Dashboard com informações sobre ações
+# Dashboard com informações sobre ações negociadas na Bolsa de Valores
 
 ## Objetivo:
 Criar uma aplicação web monstrando um painel contendo duas seções:

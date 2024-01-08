@@ -92,7 +92,7 @@ app.layout = dbc.Container([
         Input(component_id = 'dropdown-selector', component_property = 'value')
     )
 def update_graph(value):
-    print(value)   
+    #print(value)   
     fig = go.Figure(data=[go.Candlestick(x=df['Date'],
                                      open=df['Open'][value],
                                      high=df['High'][value],
@@ -117,7 +117,7 @@ def update_graph(value):
     Input(component_id='dropdown-selector', component_property='value')
 )
 def web_scrapping(ticker):
-    print(ticker)
+    #print(ticker)
     ticker_dict = {tickers[0]:'petrobras',
               tickers[1]:'weg',
               tickers[2]:'c%26a'}
@@ -152,6 +152,6 @@ def web_scrapping(ticker):
     return result
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run(debug=False)
 
 

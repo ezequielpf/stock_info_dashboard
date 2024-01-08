@@ -152,6 +152,6 @@ def web_scrapping(ticker):
     return result
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run_server(debug=False)
 
 
